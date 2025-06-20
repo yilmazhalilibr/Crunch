@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
-
+#include "Character/CCharacter.h"
 #include "CPlayerCharacter.generated.h"
 
 // Forward declarations
@@ -18,7 +18,7 @@ class UCameraComponent;
 
 
 UCLASS()
-class ACPlayerCharacter : public ACharacter
+class ACPlayerCharacter : public ACCharacter
 {
 	GENERATED_BODY()
 
