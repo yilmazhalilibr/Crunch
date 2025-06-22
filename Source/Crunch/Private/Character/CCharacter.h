@@ -56,7 +56,7 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, Category = "UI")
 	TObjectPtr<class UWidgetComponent> OverHeadWidgetComponent;
 
-	void ConfigureOverHeadWidgetComponent();
+	void ConfigureOverHeadStatusWidget(); 
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	float HeadStatGaugeVisibilityCheckUpdateGap = 1.f;
@@ -67,4 +67,5 @@ private:
 	FTimerHandle HeadStatGaugeVisibilityUpdateTimerHandle;
 
 	void UpdateHeadGaugeVisibility();
+
 };

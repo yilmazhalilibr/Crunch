@@ -16,18 +16,17 @@ class UGameplayWidget : public UUserWidget
 {
 	GENERATED_BODY()
 public:
-
 	virtual void NativeConstruct() override;
 
 
 private:
+	UPROPERTY(meta = (BindWidget))
+	class UValueGauge* HealthBar;
 
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UValueGauge> HealthBar;
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UValueGauge> ManaBar;
+	class UValueGauge* ManaBar;
 
 	UPROPERTY()
-	TObjectPtr<class UAbilitySystemComponent> OwnerAbilitySystemComponent;
+	class UAbilitySystemComponent* OwnerAbilitySystemComponent;
 
 };

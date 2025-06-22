@@ -29,14 +29,16 @@ void ACPlayerController::AcknowledgePossession(APawn* InPawn)
 		CPlayerCharacter->ClientSideInit();
 		SpawnGameplayWidget();
 	}
+
+
 }
 
 void ACPlayerController::SpawnGameplayWidget()
 {
 	if (!IsLocalPlayerController()) return;
 
-
 	GameplayWidget = CreateWidget<UGameplayWidget>(this, GameplayWidgetClass);
+
 	if (GameplayWidget)
 	{
 		GameplayWidget->AddToViewport();

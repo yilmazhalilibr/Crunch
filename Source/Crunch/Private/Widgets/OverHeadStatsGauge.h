@@ -15,13 +15,10 @@ class UOverHeadStatsGauge : public UUserWidget
 	GENERATED_BODY()
 public:
 	void ConfigureWithASC(class UAbilitySystemComponent* AbilitySystemComponent);
-
 private:
+	UPROPERTY(meta = (BindWidget))
+	class UValueGauge* HealthBar;
 
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<class UValueGauge> HealthBar;
-
-	UPROPERTY(meta = (BindWidget))//mana
-	TObjectPtr<class UValueGauge> ManaBar;
-
+	class UValueGauge* ManaBar;
 };

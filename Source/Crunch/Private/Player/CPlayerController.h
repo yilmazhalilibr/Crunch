@@ -24,12 +24,12 @@ private:
 	void SpawnGameplayWidget();
 
 	UPROPERTY()
-	TObjectPtr<class ACPlayerCharacter> CPlayerCharacter;
+	class ACPlayerCharacter* CPlayerCharacter;
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<class UGameplayWidget> GameplayWidgetClass;
-	
+
 	UPROPERTY()
-	TObjectPtr<class UGameplayWidget> GameplayWidget;
+	class UGameplayWidget* GameplayWidget;
 
 };

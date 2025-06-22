@@ -32,16 +32,13 @@ void ACCharacter::ServerSideInit()
 {
 	CAbilitySystemComponent->InitAbilityActorInfo(this, this);
 	CAbilitySystemComponent->ApplyInitialEffects();
-
+	CAbilitySystemComponent->GiveInitialAbilities();
 
 }
 
 void ACCharacter::ClientSideInit()
 {
-
 	CAbilitySystemComponent->InitAbilityActorInfo(this, this);
-
-
 
 }
 
@@ -52,11 +49,11 @@ bool ACCharacter::IsLocallyControlledByPlayer()
 
 void ACCharacter::PossessedBy(AController* NewController)
 {
-		Super::PossessedBy(NewController);
-		if (NewController && !NewController->IsPlayerController())
-		{
-			ServerSideInit();
-		}
+	Super::PossessedBy(NewController);
+	if (NewController && !NewController->IsPlayerController())
+	{
+		ServerSideInit();
+	}
 
 }
 
@@ -64,7 +61,7 @@ void ACCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ConfigureOverHeadWidgetComponent();
+	ConfigureOverHeadStatusWidget();
 }
 
 
@@ -73,7 +70,7 @@ UAbilitySystemComponent* ACCharacter::GetAbilitySystemComponent() const
 	return CAbilitySystemComponent;
 }
 
-void ACCharacter::ConfigureOverHeadWidgetComponent()
+void ACCharacter::ConfigureOverHeadStatusWidget()
 {
 	if (!OverHeadWidgetComponent)
 	{
@@ -101,14 +98,13 @@ void ACCharacter::ConfigureOverHeadWidgetComponent()
 
 void ACCharacter::UpdateHeadGaugeVisibility()
 {
-	APawn* LocalPlayerPawn = UGameplayStatics::GetPlayerPawn(this,0);
+	APawn* LocalPlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
 	if (LocalPlayerPawn)
 	{
 		float DistSquared = FVector::DistSquared(GetActorLocation(), LocalPlayerPawn->GetActorLocation());
 		OverHeadWidgetComponent->SetHiddenInGame(DistSquared > HeadStatGaugeVisibilityRangeSquared);
-
-
 	}
 
 }
+
 

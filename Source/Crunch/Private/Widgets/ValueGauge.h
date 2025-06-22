@@ -19,12 +19,12 @@ class UValueGauge : public UUserWidget
 
 public:
 	virtual void NativePreConstruct() override;
-	void SetAndBoundGameplayAttribute(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute, const FGameplayAttribute& MaxAttribute);
+	void SetAndBoundToGameplayAttribute(class UAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute, const FGameplayAttribute& MaxAttribute);
 	void SetValue(float NewValue, float NewMaxValue);
 
 private:
-	void ValueChange(const FOnAttributeChangeData& Data);
-	void MaxValueChange(const FOnAttributeChangeData& Data);
+	void ValueChanged(const FOnAttributeChangeData& ChangedData);
+	void MaxValueChanged(const FOnAttributeChangeData& ChangedData);
 
 
 	float CachedValue;
@@ -34,8 +34,9 @@ private:
 	FLinearColor BarColor;
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
-	TObjectPtr<class UProgressBar> ProgressBar;
+	class UProgressBar* ProgressBar;
+
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
-	TObjectPtr<class UTextBlock> ValueText;
+	class UTextBlock* ValueText;
 
 };

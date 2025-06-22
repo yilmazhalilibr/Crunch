@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "Character/CCharacter.h"
+#include "GAS/CGameplayAbilityTypes.h"
 #include "CPlayerCharacter.generated.h"
 
 // Forward declarations
@@ -15,8 +16,6 @@ class UEnhancedInputComponent; // Uncomment if using Enhanced Input System
 class USpringArmComponent;
 class UCameraComponent;
 
-
-
 UCLASS()
 class ACPlayerCharacter : public ACCharacter
 {
@@ -24,7 +23,6 @@ class ACPlayerCharacter : public ACCharacter
 
 public:
 	// Sets default values for this character's properties
-	ACPlayerCharacter();
 
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "View")
@@ -47,13 +45,26 @@ public:
 
 	void HandleLookInput(const FInputActionValue& Value);
 	void HandleMoveInput(const FInputActionValue& Value);
+	void HandleAbilityInput(const FInputActionValue& InputActionValue,ECAbilityInputID InputID);
 
 	FVector GetLookRightDir() const;
 	FVector GetLookForwardDir() const;
 	FVector GetMoveForwardDir() const;
 
+	//Input
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TMap<ECAbilityInputID, class UInputAction*> GameplayAbilityInputActions;
+
+
+	// Function to handle ability input
+
+	
 protected:
 	// Called when the game starts or when spawned
+
+	ACPlayerCharacter();
+
 	virtual void BeginPlay() override;
 
 public:
