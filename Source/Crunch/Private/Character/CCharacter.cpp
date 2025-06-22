@@ -9,6 +9,7 @@
 #include "Components/WidgetComponent.h"
 #include "Widgets/OverHeadStatsGauge.h"
 #include <Kismet/GameplayStatics.h>
+#include "GAS/CAbilitySystemStatics.h"
 
 // Sets default values
 ACCharacter::ACCharacter()
@@ -24,7 +25,7 @@ ACCharacter::ACCharacter()
 	OverHeadWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverHead Widget Component"));
 	OverHeadWidgetComponent->SetupAttachment(GetRootComponent());
 
-
+	BindGASChangeDelegates();
 
 }
 
@@ -70,6 +71,28 @@ UAbilitySystemComponent* ACCharacter::GetAbilitySystemComponent() const
 	return CAbilitySystemComponent;
 }
 
+void ACCharacter::BindGASChangeDelegates()
+{
+	if (CAbilitySystemComponent)
+	{
+		CAbilitySystemComponent->RegisterGameplayTagEvent(UCAbilitySystemStatics::GetDeadStatTag()).AddUObject(this,&ACCharacter::DeathTagUpdated);
+	}
+}
+
+void ACCharacter::DeathTagUpdated(const FGameplayTag Tag, int32 NewCount)
+{
+	if (NewCount != 0)
+	{
+		StartDeathSequence();
+	}
+	else
+	{
+		Respawn();
+	}
+}
+
+
+
 void ACCharacter::ConfigureOverHeadStatusWidget()
 {
 	if (!OverHeadWidgetComponent)
@@ -107,4 +130,23 @@ void ACCharacter::UpdateHeadGaugeVisibility()
 
 }
 
+void ACCharacter::StartDeathSequence()
+{
+	//GEgine with LOG add
+	UE_LOG(LogTemp, Warning, TEXT("Character is dead!"));
+	if(GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Character is dead!"));
+	}
+}
 
+void ACCharacter::Respawn()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Character is respawn!"));
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Character is respawn!"));
+	}
+}
+
+ 

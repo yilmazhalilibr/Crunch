@@ -5,6 +5,12 @@
 #include "GameplayEffect.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayAbilitySpec.h"
+#include "GAS/CAttributeSet.h"
+
+UCAbilitySystemComponent::UCAbilitySystemComponent()
+{
+	GetGameplayAttributeValueChangeDelegate(UCAttributeSet::GetHealthAttribute()).AddUObject(this, &UCAbilitySystemComponent::HealthUpdated);
+}
 
 void UCAbilitySystemComponent::ApplyInitialEffects()
 {
@@ -36,4 +42,17 @@ void UCAbilitySystemComponent::GiveInitialAbilities()
 	{
 		GiveAbility(FGameplayAbilitySpec(AbilityPair.Value, 1, (int32)AbilityPair.Key, this));
 	}
+}
+
+void UCAbilitySystemComponent::HealthUpdated(const FOnAttributeChangeData& ChangeData)
+{
+	if (!GetOwner()) return;
+
+	if (ChangeData.NewValue <= 0 && GetOwner()->HasAuthority() && DeathEffect)
+	{
+		FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingSpec(DeathEffect, 1.0f, MakeEffectContext());
+		ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
+
+	}
+
 }

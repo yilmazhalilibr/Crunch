@@ -9,3 +9,8 @@ FGameplayTag UCAbilitySystemStatics::GetBasicAttackAbilityTag()
 	return FGameplayTag::RequestGameplayTag(FName("Ability.BasicAttack"));
 
 }
+
+FGameplayTag UCAbilitySystemStatics::GetDeadStatTag()
+{
+	return FGameplayTag::RequestGameplayTag("Stats.Dead");
+}
