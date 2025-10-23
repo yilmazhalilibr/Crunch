@@ -59,6 +59,14 @@ public:
 
 	// Function to handle ability input
 
+
+	////*** Dead And Respawn ***////
+
+	
+	virtual void OnDead() override;
+	virtual void OnRespawn() override;
+
+
 	
 protected:
 	// Called when the game starts or when spawned
@@ -66,6 +74,10 @@ protected:
 	ACPlayerCharacter();
 
 	virtual void BeginPlay() override;
+
+
+
+
 
 public:
 	// Called every frame
@@ -75,5 +87,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void PawnClientRestart() override;
+
+
+
 
 };

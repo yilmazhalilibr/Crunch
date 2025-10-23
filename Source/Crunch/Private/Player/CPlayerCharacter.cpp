@@ -14,6 +14,7 @@
 
 
 
+
 // Sets default values
 ACPlayerCharacter::ACPlayerCharacter()
 {
@@ -89,6 +90,27 @@ void ACPlayerCharacter::PawnClientRestart()
 
 
 }
+
+void ACPlayerCharacter::OnDead()
+{
+	APlayerController* PlayerController = GetController<APlayerController>();
+
+	if (PlayerController)
+	{
+		DisableInput(PlayerController);
+	}
+
+}
+void ACPlayerCharacter::OnRespawn()
+{
+	APlayerController* PlayerController = GetController<APlayerController>();
+
+	if (PlayerController)
+	{
+		EnableInput(PlayerController);
+	}
+}
+
 void ACPlayerCharacter::HandleLookInput(const FInputActionValue& Value)
 {
 	FVector2D InputVal = Value.Get<FVector2D>();
@@ -140,3 +162,5 @@ FVector ACPlayerCharacter::GetMoveForwardDir() const
 {
 	return FVector::CrossProduct(GetLookRightDir(), FVector::UpVector);
 }
+
+

@@ -75,7 +75,7 @@ void ACCharacter::BindGASChangeDelegates()
 {
 	if (CAbilitySystemComponent)
 	{
-		CAbilitySystemComponent->RegisterGameplayTagEvent(UCAbilitySystemStatics::GetDeadStatTag()).AddUObject(this,&ACCharacter::DeathTagUpdated);
+		CAbilitySystemComponent->RegisterGameplayTagEvent(UCAbilitySystemStatics::GetDeadStatTag()).AddUObject(this, &ACCharacter::DeathTagUpdated);
 	}
 }
 
@@ -130,14 +130,46 @@ void ACCharacter::UpdateHeadGaugeVisibility()
 
 }
 
+void ACCharacter::SetStatusGaugeEnabled(bool bEnabled)
+{
+	GetWorldTimerManager().ClearTimer(HeadStatGaugeVisibilityUpdateTimerHandle);
+
+	if (bEnabled)
+	{
+		ConfigureOverHeadStatusWidget();
+	}
+	else
+	{
+		OverHeadWidgetComponent->SetHiddenInGame(true);
+	}
+}
+
+void ACCharacter::PlayDeathAnimation()
+{
+	if (DeathMontage)
+	{
+
+		PlayAnimMontage(DeathMontage);
+	}
+
+
+}
+
 void ACCharacter::StartDeathSequence()
 {
 	//GEgine with LOG add
 	UE_LOG(LogTemp, Warning, TEXT("Character is dead!"));
-	if(GEngine)
+	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Character is dead!"));
 	}
+	OnDead();
+	PlayDeathAnimation();
+	SetStatusGaugeEnabled(false);
+	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+
 }
 
 void ACCharacter::Respawn()
@@ -147,6 +179,17 @@ void ACCharacter::Respawn()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Character is respawn!"));
 	}
+	OnRespawn();
+
 }
 
- 
+void ACCharacter::OnDead()
+{
+
+}
+
+void ACCharacter::OnRespawn()
+{
+
+}
+

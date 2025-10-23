@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
 #include "GameplayTagContainer.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "CCharacter.generated.h"
 
 
@@ -72,11 +74,20 @@ private:
 	FTimerHandle HeadStatGaugeVisibilityUpdateTimerHandle;
 
 	void UpdateHeadGaugeVisibility();
+	void SetStatusGaugeEnabled(bool bEnabled);
 	/***********************************************/
 	/*              Death And Respawn              */
 	/***********************************************/
+	UPROPERTY(EditDefaultsOnly, Category = "Death")
+	UAnimMontage* DeathMontage;
+
+	void PlayDeathAnimation();
 
 	void StartDeathSequence();
 	void Respawn();
+
+	virtual void OnDead();
+	virtual void OnRespawn();
+
 
 };
