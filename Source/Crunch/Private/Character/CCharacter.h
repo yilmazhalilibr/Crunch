@@ -85,7 +85,7 @@ private:
 	UAnimMontage* DeathMontage;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Death")
-	float DeathMontageFinishTimeShift = 0.8f;
+	float DeathMontageFinishTimeShift = 0.2f;
 
 	FTimerHandle DeathMontageTimerHandle;
 
