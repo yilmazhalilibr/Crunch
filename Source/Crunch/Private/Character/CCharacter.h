@@ -78,9 +78,19 @@ private:
 	/***********************************************/
 	/*              Death And Respawn              */
 	/***********************************************/
+
+	FTransform MeshRelativeTransform;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Death")
 	UAnimMontage* DeathMontage;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Death")
+	float DeathMontageFinishTimeShift = 0.8f;
+
+	FTimerHandle DeathMontageTimerHandle;
+
+	void DeathMontageFinished();
+	void SetRagdollEnabled(bool bEnabled);
 	void PlayDeathAnimation();
 
 	void StartDeathSequence();
